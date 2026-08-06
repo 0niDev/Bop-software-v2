@@ -57,7 +57,28 @@ class BankRepository(BaseRepository):
     def get_account_balance(self, account_id: int) -> float:
         """Get current balance for a bank account."""
         account = self.get_by_id(account_id)
-        return account.get('current_balance', 0) if account else 0
+        return account.get('opening_balance', 0) if account else 0
+    
+    def get_total_balance(self, company_id: int = 1) -> float:
+        """
+        Get total balance across all bank accounts.
+        
+        Args:
+            company_id: Company ID
+            
+        Returns:
+            Total balance across all accounts
+        """
+        query = """
+            SELECT COALESCE(SUM(opening_balance), 0) as total_balance
+            FROM bank_accounts
+            WHERE company_id = ? AND is_active = 1
+        """
+        try:
+            result = self.execute_single(query, (company_id,))
+            return float(result.get('total_balance', 0)) if result else 0.0
+        except Exception:
+            return 0.0
     
     def create(self, data: Dict[str, Any]) -> int:
         """Create a new bank account."""
