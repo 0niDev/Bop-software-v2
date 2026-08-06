@@ -14,6 +14,22 @@ class StockRepository(BaseRepository):
     def __init__(self):
         super().__init__('stock', 'id')
     
+    def get_current_stock(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Get current stock levels for all items."""
+        # Check if stock table exists first
+        try:
+            query = """
+                SELECT s.*, i.name as item_name, i.sku as item_sku
+                FROM stock s
+                JOIN items i ON s.item_id = i.id
+                ORDER BY i.name
+                LIMIT ?
+            """
+            return self.execute_query(query, (limit,))
+        except Exception:
+            # Table doesn't exist yet, return empty list
+            return []
+    
     def get_stock_for_item(self, item_id: int) -> Optional[Dict[str, Any]]:
         """Get current stock for an item."""
         query = "SELECT * FROM stock WHERE item_id = ?"

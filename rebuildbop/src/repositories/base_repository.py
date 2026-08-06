@@ -41,7 +41,7 @@ class BaseRepository(ABC):
     def _get_connection(self):
         """Get a database connection."""
         if self._connection is None:
-            self._connection = SQLiteCloudConnection.get_connection()
+            self._connection = SQLiteCloudConnection()
         return self._connection
     
     def _close_connection(self):
@@ -66,7 +66,7 @@ class BaseRepository(ABC):
         """
         conn = None
         try:
-            conn = SQLiteCloudConnection.get_connection()
+            conn = SQLiteCloudConnection()
             cursor = conn.execute(query, params)
             columns = [description[0] for description in cursor.description]
             results = []
@@ -88,7 +88,7 @@ class BaseRepository(ABC):
         """Execute an INSERT query and return the last inserted ID."""
         conn = None
         try:
-            conn = SQLiteCloudConnection.get_connection()
+            conn = SQLiteCloudConnection()
             cursor = conn.execute(query, params)
             conn.commit()
             return cursor.lastrowid
@@ -104,7 +104,7 @@ class BaseRepository(ABC):
         """Execute an UPDATE query and return number of affected rows."""
         conn = None
         try:
-            conn = SQLiteCloudConnection.get_connection()
+            conn = SQLiteCloudConnection()
             cursor = conn.execute(query, params)
             conn.commit()
             return cursor.rowcount
@@ -120,7 +120,7 @@ class BaseRepository(ABC):
         """Execute a DELETE query and return number of affected rows."""
         conn = None
         try:
-            conn = SQLiteCloudConnection.get_connection()
+            conn = SQLiteCloudConnection()
             cursor = conn.execute(query, params)
             conn.commit()
             return cursor.rowcount
@@ -136,7 +136,7 @@ class BaseRepository(ABC):
         """Execute a batch operation efficiently."""
         conn = None
         try:
-            conn = SQLiteCloudConnection.get_connection()
+            conn = SQLiteCloudConnection()
             cursor = conn.executemany(query, params_list)
             conn.commit()
             return cursor.rowcount
