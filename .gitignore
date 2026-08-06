@@ -1,49 +1,59 @@
 ```
-# Python
-__pycache__/
+# Compiled and build artifacts
 *.pyc
+__pycache__/
 *.pyo
 *.pyd
-
-# Database
-*.sqlite
-*.db
-
-# Logs
-*.log
-
-# Environment
-.env
-.env.local
-*.env.*
+*.so
+*.egg-info/
 
 # Dependencies
-.recommends/
 .venv/
 venv/
 env/
+.env/
+requirements.txt.bak
 
-# Build artifacts
-build/
-dist/
-*.egg-info/
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
 
 # Editors
 .vscode/
 .idea/
-*.swp
-*.swo
+*.sublime-project
+*.sublime-workspace
 
-# OS
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# Coverage
+# Coverage reports
 .coverage
-coverage/
 htmlcov/
+coverage/
 
-# Testing
-.pytest_cache/
-.mypy_cache/
+# Python specific
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 ```
