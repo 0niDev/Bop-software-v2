@@ -1,32 +1,23 @@
 """
-Database configuration placeholder for SQLite Cloud.
+Database configuration for SQLite Cloud.
 
-CRITICAL: This file needs your SQLite Cloud API key to connect to the database.
+CRITICAL: This file contains your SQLite Cloud API key to connect to the database.
 
-TO CONFIGURE:
-1. Get your API key from the old BOP system
-2. Replace the empty string below with your actual API key
-3. Or set environment variable: SQLITE_CLOUD_API_KEY=your_key_here
-
-Example:
+Configuration:
     SQLITE_CLOUD_API_KEY = "bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw"
     SQLITE_CLOUD_HOST = "cjja8z6pvz.g4.sqlite.cloud"
     SQLITE_CLOUD_PORT = 8860
-    SQLITE_CLOUD_DATABASE = "cool-depot.sqlite"
+    SQLITE_CLOUD_DATABASE = "cool-depot.sqlite"  # Main ERP database from old system
 """
 
-# SQLite Cloud Configuration - PROVIDED BY USER
+# SQLite Cloud Configuration - FROM OLD SYSTEM
 SQLITE_CLOUD_API_KEY = "bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw"
 SQLITE_CLOUD_HOST = "cjja8z6pvz.g4.sqlite.cloud"
 SQLITE_CLOUD_PORT = 8860
-SQLITE_CLOUD_DATABASE = "auth.sqlitecloud"
+SQLITE_CLOUD_DATABASE = "cool-depot.sqlite"  # Main database from old BOP system
 
-# Connection String (will be built from above values if API key is provided)
+# Connection String (built from above values)
 SQLITE_CLOUD_URL = ""
-
-# If you have a complete connection URL, you can use it directly:
-# Example: sqlitecloud://cjja8z6pvz.g4.sqlite.cloud:8860/cool-depot.sqlite?apikey=bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw
-SQLITE_CLOUD_URL = "sqlitecloud://cjja8z6pvz.g4.sqlite.cloud:8860/auth.sqlitecloud?apikey=bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw"
 
 
 def get_sqlite_cloud_url() -> str:

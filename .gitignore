@@ -1,8 +1,38 @@
 ```
-# Dependencies
-old_bop_repo/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Documentation build artifacts (if any)
-docs/_build/
-docs/build/
+# Dependencies
+.venv/
+venv/
+env/
+.env
+.env.local
+.env.*
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage
+.coverage
+coverage/
+htmlcov/
+
+# Testing
+.pytest_cache/
+.mypy_cache/
 ```
