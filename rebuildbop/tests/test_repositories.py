@@ -5,8 +5,9 @@ Tests against LIVE SQLite Cloud Database
 import sys
 import os
 
-# Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+# Add the project root (rebuildbop) to path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
 
 from src.database.connection import get_db, test_connection
 from src.repositories.user_repository import UserRepository
