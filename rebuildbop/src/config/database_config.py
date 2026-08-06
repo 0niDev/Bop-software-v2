@@ -15,18 +15,18 @@ Example:
     SQLITE_CLOUD_DATABASE = "cool-depot.sqlite"
 """
 
-# SQLite Cloud Configuration
-SQLITE_CLOUD_API_KEY = ""  # ← INSERT YOUR API KEY HERE
-SQLITE_CLOUD_HOST = ""  # ← INSERT YOUR HOST HERE (e.g., cjja8z6pvz.g4.sqlite.cloud)
+# SQLite Cloud Configuration - PROVIDED BY USER
+SQLITE_CLOUD_API_KEY = "bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw"
+SQLITE_CLOUD_HOST = "cjja8z6pvz.g4.sqlite.cloud"
 SQLITE_CLOUD_PORT = 8860
-SQLITE_CLOUD_DATABASE = ""  # ← INSERT YOUR DATABASE NAME HERE
+SQLITE_CLOUD_DATABASE = "auth.sqlitecloud"
 
 # Connection String (will be built from above values if API key is provided)
 SQLITE_CLOUD_URL = ""
 
 # If you have a complete connection URL, you can use it directly:
 # Example: sqlitecloud://cjja8z6pvz.g4.sqlite.cloud:8860/cool-depot.sqlite?apikey=bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw
-# SQLITE_CLOUD_URL = "sqlitecloud://YOUR_HOST:8860/YOUR_DB?apikey=YOUR_API_KEY"
+SQLITE_CLOUD_URL = "sqlitecloud://cjja8z6pvz.g4.sqlite.cloud:8860/auth.sqlitecloud?apikey=bmJZ0l1RTFCoxS0Au17c0iofzZmrDn2Db94v0YtV9Uw"
 
 
 def get_sqlite_cloud_url() -> str:
