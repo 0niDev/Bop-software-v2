@@ -38,6 +38,11 @@ class AccountRepository(BaseRepository):
         query = "SELECT * FROM accounts WHERE account_code = ?"
         return self.execute_single(query, (account_code,))
     
+    def get_by_type(self, account_type: str, limit: int = 50) -> List[Dict[str, Any]]:
+        """Get accounts by type (alias for get_accounts_by_type with limit)."""
+        query = "SELECT * FROM accounts WHERE account_type = ? ORDER BY account_code LIMIT ?"
+        return self.execute_query(query, (account_type, limit))
+    
     def get_accounts_by_type(self, account_type: str) -> List[Dict[str, Any]]:
         """Get all accounts of a specific type."""
         query = "SELECT * FROM accounts WHERE account_type = ? ORDER BY account_code"

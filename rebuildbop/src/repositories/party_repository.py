@@ -71,6 +71,11 @@ class PartyRepository(BaseRepository):
         query = "SELECT * FROM parties WHERE name = ?"
         return self.execute_single(query, (name,))
     
+    def search_by_name(self, name: str, limit: int = 50) -> List[Dict[str, Any]]:
+        """Search parties by name (partial match)."""
+        query = "SELECT * FROM parties WHERE name LIKE ? ORDER BY name LIMIT ?"
+        return self.execute_query(query, (f"%{name}%", limit))
+    
     def get_by_type(self, party_type: str, order_by: str = 'name') -> List[Dict[str, Any]]:
         """
         Get all parties of a specific type.
