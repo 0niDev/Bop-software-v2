@@ -218,6 +218,21 @@ class PartyRepository(BaseRepository):
         
         return self.execute_query(query, tuple(params))
     
+    def count_by_type(self, party_type: str, company_id: int = 1) -> int:
+        """
+        Count parties by type.
+        
+        Args:
+            party_type: Party type to count
+            company_id: Company ID
+            
+        Returns:
+            Count of parties
+        """
+        query = "SELECT COUNT(*) as count FROM parties WHERE party_type = ? AND company_id = ?"
+        result = self.execute_single(query, (party_type, company_id))
+        return result.get('count', 0) if result else 0
+    
     def check_duplicate(self, name: str, phone: str = None, email: str = None) -> bool:
         """Check if a party already exists with same details."""
         conditions = ["name = ?"]
