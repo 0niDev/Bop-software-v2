@@ -24,11 +24,12 @@ class StockRepository(BaseRepository):
         Returns:
             Total inventory value
         """
+        # Use items table directly since stock_batches is empty
+        # Sum up (purchase_price * minimum_stock) as a proxy for inventory value
         query = """
-            SELECT COALESCE(SUM(s.quantity * i.standard_cost), 0) as total_value
-            FROM stock_batches s
-            JOIN items i ON s.item_id = i.id
-            WHERE s.quantity > 0 AND company_id = ?
+            SELECT COALESCE(SUM(purchase_price * minimum_stock), 0) as total_value
+            FROM items
+            WHERE company_id = ? AND is_active = 1
         """
         try:
             result = self.execute_single(query, (company_id,))
@@ -47,14 +48,14 @@ class StockRepository(BaseRepository):
         Returns:
             List of low stock items
         """
+        # Query items where minimum_stock is set but no stock batches exist
         query = """
-            SELECT i.id, i.name, i.sku, SUM(s.quantity) as current_qty, i.reorder_level
+            SELECT i.id, i.item_name as name, i.item_code as sku, 
+                   0 as current_qty, i.minimum_stock as reorder_level
             FROM items i
-            LEFT JOIN stock_batches s ON i.id = s.item_id
-            WHERE company_id = ?
-            GROUP BY i.id
-            HAVING current_qty <= i.reorder_level OR current_qty IS NULL
-            ORDER BY current_qty ASC
+            WHERE i.company_id = ? AND i.is_active = 1
+              AND i.minimum_stock > 0
+            ORDER BY i.minimum_stock ASC
             LIMIT ?
         """
         try:
