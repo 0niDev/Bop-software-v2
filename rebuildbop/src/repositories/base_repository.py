@@ -179,22 +179,31 @@ class BaseRepository(ABC):
             query += f" LIMIT {limit}"
         return self.execute_query(query)
     
-    def count(self, where_clause: str = None, params: tuple = ()) -> int:
+    def count(self, where_clause: str = None, params: tuple = (), company_id: int = None) -> int:
         """
-        Count records in the table.
+        Count records in the table with optional company filter.
         
         Args:
             where_clause: WHERE clause (without 'WHERE' keyword)
             params: Parameters for the WHERE clause
+            company_id: Optional company ID to filter
             
         Returns:
             Count of records
         """
+        if company_id is not None:
+            if where_clause:
+                where_clause += f" AND company_id = ?"
+                params = params + (company_id,)
+            else:
+                where_clause = "company_id = ?"
+                params = (company_id,)
+        
         query = f"SELECT COUNT(*) as count FROM {self.table_name}"
         if where_clause:
             query += f" WHERE {where_clause}"
         result = self.execute_single(query, params)
-        return result['count'] if result else 0
+        return result.get('count', 0) if result else 0
     
     def exists(self, where_clause: str, params: tuple = ()) -> bool:
         """

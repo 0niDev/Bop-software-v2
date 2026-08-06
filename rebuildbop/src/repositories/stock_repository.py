@@ -14,6 +14,54 @@ class StockRepository(BaseRepository):
     def __init__(self):
         super().__init__('stock', 'id')
     
+    def get_inventory_value(self, company_id: int = 1) -> float:
+        """
+        Get total inventory value.
+        
+        Args:
+            company_id: Company ID
+            
+        Returns:
+            Total inventory value
+        """
+        query = """
+            SELECT COALESCE(SUM(s.quantity * i.standard_cost), 0) as total_value
+            FROM stock_batches s
+            JOIN items i ON s.item_id = i.id
+            WHERE s.quantity > 0 AND company_id = ?
+        """
+        try:
+            result = self.execute_single(query, (company_id,))
+            return float(result.get('total_value', 0)) if result else 0.0
+        except Exception:
+            return 0.0
+    
+    def get_low_stock_items(self, limit: int = 10, company_id: int = 1) -> List[Dict[str, Any]]:
+        """
+        Get items with low stock levels.
+        
+        Args:
+            limit: Maximum number of items to return
+            company_id: Company ID
+            
+        Returns:
+            List of low stock items
+        """
+        query = """
+            SELECT i.id, i.name, i.sku, SUM(s.quantity) as current_qty, i.reorder_level
+            FROM items i
+            LEFT JOIN stock_batches s ON i.id = s.item_id
+            WHERE company_id = ?
+            GROUP BY i.id
+            HAVING current_qty <= i.reorder_level OR current_qty IS NULL
+            ORDER BY current_qty ASC
+            LIMIT ?
+        """
+        try:
+            return self.execute_query(query, (company_id, limit))
+        except Exception:
+            return []
+    
     def get_current_stock(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Get current stock levels for all items."""
         # Check if stock table exists first

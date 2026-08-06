@@ -15,6 +15,54 @@ class InvoiceRepository(BaseRepository):
     def __init__(self):
         super().__init__('invoices', 'id')
     
+    def get_sales_summary(self, start_date: str, end_date: str, company_id: int = 1) -> Dict[str, Any]:
+        """
+        Get sales summary for a date range.
+        
+        Args:
+            start_date: Start date (YYYY-MM-DD)
+            end_date: End date (YYYY-MM-DD)
+            company_id: Company ID
+            
+        Returns:
+            Dictionary with total and count
+        """
+        query = """
+            SELECT 
+                COALESCE(SUM(total_amount), 0) as total,
+                COUNT(*) as count
+            FROM sales_invoices
+            WHERE date(invoice_date) BETWEEN date(?) AND date(?)
+            AND company_id = ?
+            AND status != 'CANCELLED'
+        """
+        result = self.execute_single(query, (start_date, end_date, company_id))
+        return result if result else {'total': 0.0, 'count': 0}
+    
+    def get_purchase_summary(self, start_date: str, end_date: str, company_id: int = 1) -> Dict[str, Any]:
+        """
+        Get purchase summary for a date range.
+        
+        Args:
+            start_date: Start date (YYYY-MM-DD)
+            end_date: End date (YYYY-MM-DD)
+            company_id: Company ID
+            
+        Returns:
+            Dictionary with total and count
+        """
+        query = """
+            SELECT 
+                COALESCE(SUM(total_amount), 0) as total,
+                COUNT(*) as count
+            FROM purchase_invoices
+            WHERE date(invoice_date) BETWEEN date(?) AND date(?)
+            AND company_id = ?
+            AND status != 'CANCELLED'
+        """
+        result = self.execute_single(query, (start_date, end_date, company_id))
+        return result if result else {'total': 0.0, 'count': 0}
+    
     def create_invoice(self, invoice_number: str, invoice_type: str, party_id: int,
                        invoice_date: str = None, due_date: str = None,
                        subtotal: float = 0.0, tax_amount: float = 0.0,
