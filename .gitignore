@@ -5,27 +5,38 @@ __pycache__/
 *.pyo
 *.pyd
 
+# Database
+*.sqlite
+*.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
 # Dependencies
+.recommends/
 .venv/
 venv/
 env/
-.env
-.env.local
-.env.*
 
 # Build artifacts
 build/
 dist/
 *.egg-info/
 
-# Logs
-*.log
-
 # Editors
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Coverage
 .coverage
