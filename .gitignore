@@ -1,1 +1,34 @@
-Nothing should be ignored based on the provided file changes. The only modified file is a Python test file (`rebuildbop/tests/test_repositories.py`), which is source code and should not be ignored. There are no build artifacts, dependencies, or temporary files in the changes that would warrant adding ignore rules.
+```
+# Dependencies
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.env
+.env.local
+.env.*
+# Build artifacts
+dist/
+build/
+*.egg-info/
+# Logs
+*.log
+# Coverage
+.coverage
+coverage/
+htmlcov/
+# Testing
+.pytest_cache/
+.mypy_cache/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+# OS
+.DS_Store
+Thumbs.db
+```
